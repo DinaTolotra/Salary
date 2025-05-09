@@ -12,7 +12,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $apiNamespace = 'App\Http\Controllers\Api'; // Change si tu as une structure différente
+    protected $namespace = 'App\Http\Controllers'; // Change si tu as une structure différente
 
     /**
      * Enregistre les routes pour l'application.
@@ -26,13 +26,13 @@ class RouteServiceProvider extends ServiceProvider
         // Définir les routes pour l'API
         Route::middleware('api')
             ->prefix('api')
-            ->namespace($this->apiNamespace)
+            ->namespace($this->namespace.'\api')
             ->group(base_path('routes/api.php'));
 
-        // // Définir les routes pour l'application web
-        // Route::middleware('web')
-        //     ->namespace($this->namespace)
-        //     ->group(base_path('routes/web.php'));
+        // Définir les routes pour l'application web
+        Route::middleware('web')
+            ->namespace($this->namespace.'\web')
+            ->group(base_path('routes/web.php'));
     }
 
     /**

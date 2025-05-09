@@ -1,14 +1,13 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+$index = function () {
+    return view('index');
+};
 
-
-
-Route::get('/test', function () {
-    return 'ça fonctionne';
-});
+Route::get('/', $index);
+Route::get('/connexion', $index);
+Route::get('/ajout', $index);
+Route::get('/list', $index);
+Route::get('/bilan', $index);
 
