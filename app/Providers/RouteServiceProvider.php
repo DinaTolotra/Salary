@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\CorsMiddleware;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -20,20 +21,26 @@ class RouteServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-    {
-        parent::boot();
+{
+    parent::boot();
 
-        // Définir les routes pour l'API
-        Route::middleware('api')
-            ->prefix('api')
-            ->namespace($this->apiNamespace)
-            ->group(base_path('routes/api.php'));
+    $router = $this->app['router'];
 
-        // // Définir les routes pour l'application web
-        // Route::middleware('web')
-        //     ->namespace($this->namespace)
-        //     ->group(base_path('routes/web.php'));
-    }
+    // Ajoute d'abord les middlewares aux groupes avant la définition des routes
+    $router->pushMiddlewareToGroup('web', CorsMiddleware::class);
+    $router->pushMiddlewareToGroup('api', CorsMiddleware::class);
+
+    // Définir les routes pour l'API
+    Route::middleware('api')
+        ->prefix('api')
+        ->namespace($this->apiNamespace)
+        ->group(base_path('routes/api.php'));
+
+    // Définir les routes pour l'application web
+    Route::middleware('web')
+        ->namespace($this->namespace)
+        ->group(base_path('routes/web.php'));
+}
 
     /**
      * Enregistre les services de l'application.

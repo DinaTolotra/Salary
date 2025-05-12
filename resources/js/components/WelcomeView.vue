@@ -1,8 +1,7 @@
 <template>
+<p>welcome</p>
 
 </template>
 
-<script setup>
-
-
+<script>
 </script>

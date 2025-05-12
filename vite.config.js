@@ -9,7 +9,20 @@ export default defineConfig({
             input: ['resources/css/app.css', 'resources/js/app.js'],
             refresh: true,
         }),
-        
+
         vue(),
     ],
+
+    server: {
+        host: 'localhost',
+        port: 5173,
+        strictPort: true,
+        server: {
+            cors: true,
+        },
+
+        hmr: {
+            host: 'localhost',
+        },
+    },
 });
