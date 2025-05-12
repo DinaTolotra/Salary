@@ -1,8 +1,8 @@
 <?php
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Models\User;
+use Symfony\Component\HttpFoundation\Request;
 
-Route::post("/", function ($Request) {
-    return response()->json(['message' => 'API fonctionne'], 200);
+Route::POST("/", function (Request $request) {
+    return response('Received', 200)
+        ->header('Access-Control-Allow-Origins', '*');
 });
