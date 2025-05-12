@@ -23,6 +23,10 @@ const router = createRouter({
             component: AddView,
         },
         {
+            path: '/ajout/:numero',
+            component: AddView,
+        },
+        {
             path: '/list',
             component: ListView,
         },

@@ -7,9 +7,6 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-
-    
-
     public function index()
     {
         return response()->json(User::all());
@@ -45,7 +42,7 @@ class UserController extends Controller
 
     // Retourner une réponse
     return response()->json(['message' => 'User deleted successfully']);
-    
+
 } catch (\Throwable $th) {
     \Log::error('Erreur lors de la suppression de l\'utilisateur : ' . $th->getMessage());
         return response()->json(['error' => 'Erreur lors de la suppression'], 500);

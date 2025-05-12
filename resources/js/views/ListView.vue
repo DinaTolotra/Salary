@@ -23,8 +23,8 @@
                 <td>{{ user.numero }}</td>
                 <td>{{ user.nbjour }}</td>
                 <td>{{ user.taux }}</td>
-                <td>{{ (user.taux * user.nbjour).toFixed(2) }}</td>
-                <td><img :src="update" alt=""></td>
+                <td>{{ (user.taux * user.nbjour).toFixed(2) }} Ar</td>
+                <td><img :src="update" alt="" @click="updateUser(user.numero)"></td>
                 <td><img :src="trash" alt="" @click="deleteUser(user.numero)"></td>
             </tr>
         </tbody>
@@ -35,9 +35,12 @@
 <script setup>
 import { ref } from 'vue';
 import axios from 'axios';
-import trash from '../../Images/trash-2.svg'
-import update from '../../Images/edit-3.svg'
+import { useRouter } from 'vue-router';
+import trash from '../../Images/trash-2.svg';
+import update from '../../Images/edit-3.svg';
+
 const users = ref([]);
+const router = useRouter();
 
 const showUsers = async () => {
     const response = await axios.get('http://localhost:8000/api/users2')
@@ -47,17 +50,18 @@ const showUsers = async () => {
 }
 showUsers();
 
+const updateUser = async (numero) => {
+    try {
+        router.push(`/ajout/${numero}`);
+    } catch (error) {
+        console.log('Error: '+error);
+    }
+}
+
 const deleteUser = async (numero) => {
     try {
         let res = await axios.delete(`http://localhost:8000/api/users2/${numero}`);
-
         users.value = users.value.filter(user => user.numero != numero);
-        if (res) {
-            console.log("reussi");
-            console.log(res);
-        }
-
-
     } catch (error) {
         console.error('Erreur lors de la suppression :', error);
     }

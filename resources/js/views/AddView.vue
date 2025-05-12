@@ -11,14 +11,26 @@
 
 <script setup>
 import axios from 'axios'
+import { useRoute } from 'vue-router';
 import { ref } from 'vue';
+
+const route = useRoute();
+const params = route.params;
+const numero = params.numero;
+
+if (numero) getUser();
 
 const form = ref({
     nom: '',
     numero: '',
     nbjour: '',
     taux: ''
-})
+});
+
+const getUser = async (num) => {
+    let res = await axios.get(`http://127.0.0.1:8000/api/users2/${num}`);
+    form.value = res.data;
+}
 
 const addUser = async() =>{
     try {
@@ -27,14 +39,9 @@ const addUser = async() =>{
         form.value.numero = '';
         form.value.nbjour = '';
         form.value.taux = '';
-
-
     } catch (error) {
         alert(error.message);
     }
 }
-
-
-
 
 </script>

@@ -47,15 +47,13 @@ class User2Controller extends Controller
     }
 
     public function deleteUser($numero) {
-
         try {
-
             $user = User2::findOrFail($numero);
-            
+
             $user->delete();
-            
+
             return response()->json(['message'=>'suppression reussi'])
-            ->header('Access-control-Allow-Origins','*');
+   ->header('Access-control-Allow-Origins','*');
         } catch (\Throwable $th) {
             return response()->json(['message' => 'utilisateur non trouve'], 200);
         }
